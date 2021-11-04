@@ -26,13 +26,15 @@ namespace areyesram
                                || a.X != b.X && a.Y == b.Y && a.Z == b.Z);
                 })
                 .ToList();
-            var size2 = side / 2;
+            var size2 = (float)(side / Math.Sqrt(3));
             foreach (var vertex in _vertices)
             {
                 vertex.X *= size2;
                 vertex.Y *= size2;
                 vertex.Z *= size2;
             }
+            _solidPen = new Pen(Brushes.DarkBlue, 2 * side / 200);
+            _dashedPen = new Pen(Brushes.SteelBlue, 1 * side / 200) { DashPattern = new[] { 1f, 1f } };
         }
 
         private readonly Voxel[] _vertices = {
@@ -47,8 +49,8 @@ namespace areyesram
         };
 
         private readonly List<IndexPair> _edges;
-        private readonly Pen _solidPen = new Pen(Brushes.DarkBlue, 2);
-        private readonly Pen _dashedPen = new Pen(Brushes.SteelBlue, 1) { DashPattern = new[] { 1f, 1f } };
+        private readonly Pen _solidPen;
+        private readonly Pen _dashedPen;
 
         internal Voxel[] RotateY(Voxel[] vertices, float theta)
         {

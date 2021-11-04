@@ -16,7 +16,7 @@ namespace areyesram
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            _cube = new Cube(Math.Min(ClientRectangle.Width, ClientRectangle.Height) * 0.5f);
+            InitCube();
         }
 
         private void MainForm_Paint(object sender, PaintEventArgs e)
@@ -27,7 +27,21 @@ namespace areyesram
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
+            InitCube();
             Invalidate();
+        }
+
+        private void InitCube()
+        {
+            float saveAX = 0, saveAY = 0;
+            if (_cube != null)
+            {
+                saveAX = _cube.AngleX;
+                saveAY = _cube.AngleY;
+            }
+            _cube = new Cube(Math.Min(ClientRectangle.Width, ClientRectangle.Height) * 0.5f);
+            _cube.AngleX = saveAX;
+            _cube.AngleY = saveAY;
         }
 
         private void timer_Tick(object sender, EventArgs e)
